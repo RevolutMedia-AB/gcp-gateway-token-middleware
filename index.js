@@ -12,6 +12,10 @@ const parseAuthToken = function (tokenFromHeader) {
 
 module.exports = function () {
   return function (req, res, next) {
+    if (typeof req?.headers === 'undefined') {
+      res.status(401).json({message: 'No headers in request at all?'});
+      return;
+    }
     const gatewayRequest = typeof req.headers['x-apigateway-api-userinfo'] !== 'undefined';
     const unParsedToken = req.headers['x-apigateway-api-userinfo'] || req.headers['authorization'];
     if (typeof unParsedToken === 'undefined') {

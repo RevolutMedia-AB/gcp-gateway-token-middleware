@@ -196,5 +196,28 @@ describe('token support test', function () {
       expect(nextWasCalled).to.be.false;
     });
   });
+
+  context('when called with an invalid req object (missing header property)', function () {
+    it('should respond with 401 and not call next', function () {
+      const middleware = tokenParser();
+      const mockReqObject = {};
+      let statusWasCalled = false;
+      const mockResObject = {
+        status: function (code) {
+          statusWasCalled = true;
+          expect(code).to.be.eq(401);
+          return {json: () => null};
+        },
+      }
+      let nextWasCalled = false;
+      const mockNextCallback = function () {
+        nextWasCalled = true;
+      }
+
+      middleware(mockReqObject, mockResObject, mockNextCallback);
+      expect(statusWasCalled).to.be.true;
+      expect(nextWasCalled).to.be.false;
+    });
+  });
 });
 
