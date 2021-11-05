@@ -18,7 +18,12 @@ module.exports = function () {
       res.status(401).json({message: 'No token supplied!!!'});
       return;
     }
-    req.user = gatewayRequest ? parseGatewayToken(unParsedToken) : parseAuthToken(unParsedToken);
+    try {
+      req.user = gatewayRequest ? parseGatewayToken(unParsedToken) : parseAuthToken(unParsedToken);
+    } catch (e) {
+      res.status(401).json({message: 'Invalid JWT supplied!'});
+      return;
+    }
     next();
   };
 };
