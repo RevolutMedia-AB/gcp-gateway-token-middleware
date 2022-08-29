@@ -5,9 +5,6 @@
     "type": "git",
     "url": "https://github.com/RevolutMedia-AB/gcp-gateway-token-middleware.git"
   },
-  "engines": {
-    "node": "14"
-  },
   "scripts": {
     "test": "mocha --config ./mocha/.mocharc.yaml"
   },
